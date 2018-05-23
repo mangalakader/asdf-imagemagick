@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-install_elixir() {
+install_imagemagick() {
   local install_type=$1
   local version=$2
   local install_path=$3
@@ -13,6 +13,8 @@ install_elixir() {
 
   # path to the tar file
   local source_path=$(get_download_file_path $install_type $version $tmp_download_dir)
+  echo $install_type
+  echo "HELLO"
   echo $source_path
   download_source_file $install_type $version $source_path
 
@@ -63,7 +65,7 @@ get_download_file_path() {
 get_download_url() {
   local install_type=$1
   local version=$2
-  echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
+  #echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
 }
 
-install_elixir $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
+install_imagemagick $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
