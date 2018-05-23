@@ -22,17 +22,15 @@ install_imagemagick() {
     tar zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
     cd $tmp_download_dir
     local configure_options="$(construct_configure_options)"
-    ./configure $configure_options > $ASDF_INSTALL_PATH/../config.log || exit 1
-    make clean test > $ASDF_INSTALL_PATH/../make.log || exit 1
-    make install > $ASDF_INSTALL_PATH/../make_install.log || exit 1
+    ./configure $configure_options > $ASDF_INSTALL_PATH/../config.log
+    make clean test > $ASDF_INSTALL_PATH/../make.log
+    make install > $ASDF_INSTALL_PATH/../make_install.log
   )
 }
 
 construct_configure_options() {
-    local configure_options="--prefix=$ASDF_INSTALL_PATH \
-                            CPPFLAGS='-I/usr/local/include' \
-                            LDFLAGS='-L/usr/local/lib'"
-                            
+    local configure_options="--prefix=$ASDF_INSTALL_PATH CPPFLAGS='-I/usr/local/include' LDFLAGS='-L/usr/local/lib'"
+
     if [ "$IMAGEMAGICK_EXTRA_CONFIGURE_OPTIONS" != "" ]; then
       configure_options="$configure_options $IMAGEMAGICK_EXTRA_CONFIGURE_OPTIONS"
     fi
