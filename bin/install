@@ -29,13 +29,13 @@ install_imagemagick() {
 }
 
 construct_configure_options() {
-    local configure_options="--prefix=$ASDF_INSTALL_PATH CPPFLAGS='-I/usr/local/include' LDFLAGS='-L/usr/local/lib'"
+    local configure_options='--prefix=$ASDF_INSTALL_PATH CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib"'
 
     if [ "$IMAGEMAGICK_EXTRA_CONFIGURE_OPTIONS" != "" ]; then
       configure_options="$configure_options $IMAGEMAGICK_EXTRA_CONFIGURE_OPTIONS"
     fi
 
-    echo "$configure_options"
+    echo $configure_options
 }
 
 
