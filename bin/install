@@ -22,7 +22,7 @@ install_imagemagick() {
   # we don't want to disturb current working dir
   (
     tar zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
-    cd $install_path
+    cd $tmp_download_dir
     ./configure --prefix=$ASDF_INSTALL_PATH CPPFLAGS='-I/usr/local/include' LDFLAGS='-L/usr/local/lib -R/usr/local/lib' 
     make clean test
     make install
