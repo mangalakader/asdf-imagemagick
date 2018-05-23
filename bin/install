@@ -31,13 +31,6 @@ install_imagemagick() {
         rm -rf $install_path
         exit 1
       fi
-    else
-      if ! type "unzip" &> /dev/null; then
-        echo "ERROR: unzip not found"
-        exit 1
-      fi
-
-      tar zxf $source_path -d $install_path || exit 1
     fi
   )
 }
@@ -65,7 +58,7 @@ get_download_file_path() {
 get_download_url() {
   local install_type=$1
   local version=$2
-  #echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
+  echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
 }
 
 install_imagemagick $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
