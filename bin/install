@@ -35,7 +35,7 @@ install_elixir() {
         exit 1
       fi
 
-      unzip -q $source_path -d $install_path || exit 1
+      tar -xf $source_path -d $install_path || exit 1
     fi
   )
 }
