@@ -25,6 +25,8 @@ install_imagemagick() {
     cd $install_path
     ./configure
     make clean test
+    make install
+    sudo ldconfig /usr/local/lib
   )
 }
 
