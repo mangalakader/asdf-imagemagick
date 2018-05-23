@@ -21,7 +21,7 @@ install_imagemagick() {
   # running this in a subshell
   # we don't want to disturb current working dir
   (
-    tar zxf $source_path -C $source_path --strip-components=1 || exit 1
+    tar zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
     cd $install_path
     ./configure --prefix=$install_path CPPFLAGS='-I/usr/local/include' LDFLAGS='-L/usr/local/lib -R/usr/local/lib' 
     make clean test
