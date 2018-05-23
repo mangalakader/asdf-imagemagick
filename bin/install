@@ -24,6 +24,7 @@ install_imagemagick() {
     ./configure --prefix=$ASDF_INSTALL_PATH CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" $IMAGEMAGICK_EXTRA > $ASDF_INSTALL_PATH/../config.log
     make clean test > $ASDF_INSTALL_PATH/../make.log
     make install > $ASDF_INSTALL_PATH/../make_install.log
+    rm -rf $tmp_download_dir
   )
 }
 
