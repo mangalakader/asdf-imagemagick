@@ -4,5 +4,9 @@ releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
 cmd="curl -s $releases_path"
 
 # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
-versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
+if [ "$(uname)" == "Linux" ]; then
+    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
+elif [ "$(uname)" == "Darwin" ]; then
+    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tail -r)
+fi
 echo $versions
