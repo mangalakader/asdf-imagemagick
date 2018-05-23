@@ -21,17 +21,10 @@ install_imagemagick() {
   # running this in a subshell
   # we don't want to disturb current working dir
   (
-    if [ "$install_type" != "version" ]; then
-      tar zxf $source_path -C $install_path --strip-components=1 || exit 1
-      cd $install_path
-      ./configure
-      make clean test
-
-      if [ $? -ne 0 ]; then
-        rm -rf $install_path
-        exit 1
-      fi
-    fi
+    tar zxf $source_path -C $install_path --strip-components=1 || exit 1
+    cd $install_path
+    ./configure
+    make clean test
   )
 }
 
