@@ -13,8 +13,6 @@ install_imagemagick() {
 
   # path to the tar file
   local source_path=$(get_download_file_path $install_type $version $tmp_download_dir)
-  echo $install_type
-  echo "HELLO"
   echo $source_path
   download_source_file $install_type $version $source_path
 
@@ -24,9 +22,9 @@ install_imagemagick() {
     tar zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
     cd $tmp_download_dir
     ./configure --prefix=$ASDF_INSTALL_PATH CPPFLAGS='-I/usr/local/include' LDFLAGS='-L/usr/local/lib' 
-    make clean test
-    make install
-    #ldconfig /usr/local/lib
+    make clean test > $ASDF_INSTALL_PATH/make.log
+    make install > $ASDF_INSTALL_PATH/make_install.log
+    ldconfig /usr/local/lib
   )
 }
 
