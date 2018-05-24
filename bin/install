@@ -70,7 +70,7 @@ get_download_url() {
   else
     ftp=ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/
     cmd="curl -s $ftp"
-    binary=$(eval  $cmd | awk '{print $9}' | grep -e 'darwin${version}.tar.gz$'
+    binary=$(eval  $cmd | awk '{print $9}' | grep -e 'darwin${version}.tar.gz$')
     echo "ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/${binary}"
   fi
 }
