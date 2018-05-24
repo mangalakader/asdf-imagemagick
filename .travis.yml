@@ -1,9 +1,7 @@
 language: c
 script: asdf plugin-test imagemagick https://github.com/mangalakader/asdf-imagemagick.git
-install: make get-deps
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git asdf
   - . asdf/asdf.sh
 os:
   - linux
-  - osx
