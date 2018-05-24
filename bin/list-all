@@ -3,10 +3,15 @@
 releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
 cmd="curl -s $releases_path"
 
+function sort_versions() {
+  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' | \
+    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
+}
+
 # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
 if [ "$(uname)" == "Linux" ]; then
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
 elif [ "$(uname)" == "Darwin" ]; then
-    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//')
+    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | sort_versions)
 fi
 echo $versions
