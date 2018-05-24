@@ -11,7 +11,7 @@ function sort_versions() {
 # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
 if [ "$(uname)" == "Linux" ]; then
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
-elif [ "$(uname)" == "Darwin" ]; then
+else
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//')
 fi
 echo $versions
