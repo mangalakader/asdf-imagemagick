@@ -14,4 +14,4 @@ if [ "$(uname)" == "Linux" ]; then
 else
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//')
 fi
-echo $versions
+echo "7.0.7.7 continuos"
