@@ -7,6 +7,6 @@ cmd="curl -s $releases_path"
 if [ "$(uname)" == "Linux" ]; then
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
 elif [ "$(uname)" == "Darwin" ]; then
-    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | sort -r)
+    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | sort -rn)
 fi
 echo $versions
