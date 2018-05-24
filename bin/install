@@ -19,6 +19,8 @@ install_imagemagick() {
   # running this in a subshell
   # we don't want to disturb current working dir
   (
+    echo $source_path
+    echo $tmp_download_dir
     tar zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
     cd $tmp_download_dir
     ./configure --prefix=$ASDF_INSTALL_PATH CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" $IMAGEMAGICK_EXTRA > $ASDF_INSTALL_PATH/../config.log
