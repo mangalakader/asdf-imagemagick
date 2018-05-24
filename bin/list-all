@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 
-if [ $(uname) == "Linux" ]; then
-    releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
-    cmd="curl -s $releases_path"
-    # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
-    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
-else
-    releases_path=ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/
-    cmd="curl -s $releases_path" 
-    versions=$(eval $cmd | awk '{print $9}' | grep -e 'darwin' | sed -e 's/\(.*darwin\)\(.*\)\(.tar.*\)/\2/' | uniq)
-fi
+releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
+cmd="curl -s $releases_path"
+# Fetch all tag names, and get only second column. Then remove all unnecesary characters.
+versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
 
 echo $versions

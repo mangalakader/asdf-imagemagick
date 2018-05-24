@@ -16,8 +16,6 @@ install_imagemagick() {
   echo $source_path
   download_source_file $install_type $version $source_path
 
-  if [ $(uname) == "Linux" ];then
-
   # running this in a subshell
   # we don't want to disturb current working dir
   (
@@ -28,15 +26,6 @@ install_imagemagick() {
     make install > $ASDF_INSTALL_PATH/../make_install.log
     rm -rf $tmp_download_dir
   )
-  else
-  ( 
-    tar zxf $source_path -C $ASDF_INSTALL_PATH --strip-components=1 || exit 1
-    export MAGICK_HOME="$ASDF_INSTALL_PATH"
-    export PATH="$MAGICK_HOME/bin:$PATH"
-    export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
-  )
-
-  fi
 }
 
 download_source_file() {
@@ -54,25 +43,16 @@ get_download_file_path() {
   local version=$2
   local tmp_download_dir=$3
   local pkg_name="imagemagick-${install_type}-${version}-src.tar.gz"
-  if [ $(uname) == "Linux" ];then
-    echo "$tmp_download_dir/$pkg_name"
-  else
-    echo "$tmp_download_dir$pkg_name"
-  fi
+  
+  echo "$tmp_download_dir/$pkg_name"
 }
 
 
 get_download_url() {
   local install_type=$1
   local version=$2
-  if [ $(uname) == "Linux" ];then
-    echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
-  else
-    ftp=ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/
-    cmd="curl -s $ftp"
-    binary=$(eval  $cmd | awk '{print $9}' | grep -e 'darwin${version}.tar.gz$')
-    echo "ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/${binary}"
-  fi
+  
+  echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
 }
 
 install_imagemagick $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
