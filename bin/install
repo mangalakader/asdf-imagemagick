@@ -36,7 +36,7 @@ download_source_file() {
   local download_path=$3
   local download_url=$(get_download_url $install_type $version)
 
-  curl -oL $download_path -C - $download_url
+  curl -o $download_path $download_url
 }
 
 
@@ -56,7 +56,7 @@ get_download_file_path() {
 get_download_url() {
   local install_type=$1
   local version=$2
-  echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
+  echo "https://codeload.github.com/ImageMagick/ImageMagick/tar.gz/${version}"
 }
 
 install_imagemagick $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
