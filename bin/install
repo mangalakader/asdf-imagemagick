@@ -45,7 +45,11 @@ get_download_file_path() {
   local version=$2
   local tmp_download_dir=$3
   local pkg_name="imagemagick-${install_type}-${version}-src.tar.gz"
-  echo "$tmp_download_dir/$pkg_name"
+  if [ $(uname) == "Darwin" ]; then
+    echo "$tmp_download_dir$pkg_name"
+  else
+    echo "$tmp_download_dir/$pkg_name"
+  fi
 }
 
 
