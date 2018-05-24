@@ -16,18 +16,27 @@ install_imagemagick() {
   echo $source_path
   download_source_file $install_type $version $source_path
 
+  if [ $(uname) == "Linux" ];then
+
   # running this in a subshell
   # we don't want to disturb current working dir
   (
-    echo $source_path
-    echo $tmp_download_dir
-    tar -zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
+    tar zxf $source_path -C $tmp_download_dir --strip-components=1 || exit 1
     cd $tmp_download_dir
     ./configure --prefix=$ASDF_INSTALL_PATH CPPFLAGS="-I/usr/local/include" LDFLAGS="-L/usr/local/lib" $IMAGEMAGICK_EXTRA > $ASDF_INSTALL_PATH/../config.log
     make clean test > $ASDF_INSTALL_PATH/../make.log
     make install > $ASDF_INSTALL_PATH/../make_install.log
     rm -rf $tmp_download_dir
   )
+  else
+  ( 
+    tar zxf $source_path -C "$ASDF_INSTALL_PATH/imagemagick" --strip-components=1 || exit 1
+    export MAGICK_HOME="$ASDF_INSTALL_PATH/imagemagick"
+    export PATH="$MAGICK_HOME/bin:$PATH"
+    export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
+  )
+
+  fi
 }
 
 download_source_file() {
@@ -36,9 +45,7 @@ download_source_file() {
   local download_path=$3
   local download_url=$(get_download_url $install_type $version)
 
-  echo $download_url
-  echo $download_path
-  curl $download_url -o $download_path
+  curl -Lo $download_path -C - $download_url
 }
 
 
@@ -47,10 +54,10 @@ get_download_file_path() {
   local version=$2
   local tmp_download_dir=$3
   local pkg_name="imagemagick-${install_type}-${version}-src.tar.gz"
-  if [ $(uname) == "Darwin" ]; then
-    echo "$tmp_download_dir$pkg_name"
-  else
+  if [ $(uname) == "Linux" ];then
     echo "$tmp_download_dir/$pkg_name"
+  else
+    echo "$tmp_download_dir$pkg_name"
   fi
 }
 
@@ -58,7 +65,11 @@ get_download_file_path() {
 get_download_url() {
   local install_type=$1
   local version=$2
-  echo "https://codeload.github.com/ImageMagick/ImageMagick/tar.gz/${version}"
+  if [ $(uname) == "Linux" ];then
+    echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
+  else
+    echo "ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/${version}.tar.gz"
+  fi
 }
 
 install_imagemagick $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH

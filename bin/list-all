@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
 
-releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
-cmd="curl -s $releases_path"
-
-function sort_versions() {
-  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' | \
-    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
-}
-
-# Fetch all tag names, and get only second column. Then remove all unnecesary characters.
-if [ "$(uname)" == "Linux" ]; then
+if [ $(uname) == "Linux" ]; then
+    releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
+    cmd="curl -s $releases_path"
+    # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
 else
-    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//')
+    releases_path=ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/
+    cmd="curl -s $releases_path" 
+    versions=$(eval $cmd | awk '{print $9}' | grep -e 'darwin' | sed -e 's/\(.*darwin\)\(.*\)\(.tar.*\)/\2/' | uniq)
 fi
-#echo $versions
- echo "7.0.7.7"
+
+echo $versions
