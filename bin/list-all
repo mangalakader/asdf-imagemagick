@@ -12,6 +12,6 @@ function sort_versions() {
 if [ "$(uname)" == "Linux" ]; then
     versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
 elif [ "$(uname)" == "Darwin" ]; then
-    versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | sort_versions)
+    versions=eval $(`$cmd` | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//')
 fi
 echo $versions
