@@ -68,7 +68,10 @@ get_download_url() {
   if [ $(uname) == "Linux" ];then
     echo "https://github.com/ImageMagick/ImageMagick/archive/${version}.tar.gz"
   else
-    echo "ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/${version}.tar.gz"
+    ftp=ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/
+    cmd="curl -s $ftp"
+    binary=$(eval  $cmd | awk '{print $9}' | grep -e 'darwin${version}.tar.gz$'
+    echo "ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/${binary}"
   fi
 }
 
