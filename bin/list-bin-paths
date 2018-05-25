@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# let asdf create shims for installed imagemagick
-echo bin
