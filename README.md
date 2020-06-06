@@ -1,5 +1,5 @@
 # asdf-imagemagick
-![Travis Build Status](https://travis-ci.org/mangalakader/asdf-imagemagick.svg?branch=master)
+![GITHUB ACTIONS BADGE](https://github.com/mangalakader/asdf-imagemagick/workflows/Imagemagick%20Plugin%20Test/badge.svg)
 
 ## Currently, the plugin works only for Linux based OS.
 
