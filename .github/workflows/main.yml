@@ -1,13 +1,14 @@
 name: "Imagemagick Plugin Test"
-
 on:
   push:
     branches:
       - master
-
 jobs:
-  steps:
-    - name: asdf_plugin_test
-      uses: asdf-vm/actions/plugin-test@v1.0.0
-      with:
-        command: "convert --version"
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: asdf_plugin_test
+        uses: asdf-vm/actions/plugin-test@v1.0.0
+        with:
+          command: "convert --version"
+
