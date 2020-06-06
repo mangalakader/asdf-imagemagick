@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 releases_path=https://api.github.com/repos/ImageMagick/ImageMagick/tags
-cmd="curl -s $releases_path"
+cmd="curl -s"
+if [ -n "$GITHUB_API_TOKEN" ]; then
+  cmd="curl -H 'Authorization: token $GITHUB_API_TOKEN'"
+fi
+cmd="$cmd $releases_path"
 # Fetch all tag names, and get only second column. Then remove all unnecesary characters.
 versions=$(eval $cmd | grep -oE "name\": \".{1,15}\"," | sed 's/name\": \"//;s/\",//' | tac)
 
